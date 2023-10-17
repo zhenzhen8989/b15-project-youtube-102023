@@ -93,6 +93,12 @@ app.get("/youtube/all", (request, response) => {
 })
 
 // POST http://localhost:8080/youtube/add
+// response.body
+// {
+//     "id": 7,
+//     "videoid":"KsXp22QLMv0",
+//     "title": "Learn how to use REST API 7"
+// }
 
 app.post("/youtube/add", (request, response)=>{
     console.log("endpoint called: /youtube/add with POST request")
@@ -101,9 +107,34 @@ app.post("/youtube/add", (request, response)=>{
     console.log(request.method)
     console.log(request.body)
     //add or push the value in request.body to videos array
-    videos.push(request.body)
+    // videos.push(request.body)
     //send back the updated videos array as response
-    response.send(videos)
+    // response.send(videos)
+
+    console.log("before creating instance of programming model");
+
+    let newVideo = new prog({
+        id:request.body.id,
+        title:request.body.title,
+        videoid:request.body.videoid
+    })
+
+    console.log("after creating instance of programming model");
+    console.log(newVideo);
+
+    // save the newVideo
+
+    newVideo.save()
+            .then((data)=>{
+                //console.log(response);
+                response.json({
+                    "status":"success",
+                    "data": data
+                })
+            })
+            .catch((error)=>{
+                response.json(error)
+            })
 })
 
 // start/fire API at given port
