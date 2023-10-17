@@ -3,6 +3,7 @@
 let express = require('express')
 let mongoose = require('mongoose')
 let prog = require('./programming')
+let cors = require('cors')
 
 // create express app
 
@@ -11,6 +12,10 @@ let app = express()
 // enable express app to use JSON content-type
 
 app.use(express.json())
+
+// enable cors in express app
+
+app.use(cors())
 
 // define a port where API will be exposed
 
